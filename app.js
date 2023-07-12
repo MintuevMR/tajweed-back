@@ -9,9 +9,12 @@ import lessonsRouter  from "./routes/lessons.route.js";
 
 export const app = express();
 
+
 //middleware
+app.use('/uploads', express.static("uploads"))
 app.use(express.json());
 app.use(cors());
+
 
 //routes
 app.use(usersRouter);
