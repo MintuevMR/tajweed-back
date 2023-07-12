@@ -1,13 +1,24 @@
 import mongoose from "mongoose";
 
 const LessonModuleSchema = new mongoose.Schema({
-    name: {
-      type: String,
+    user: {
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: "User", 
     },
-    image: {
-      type: String,
-    },
-    lessons: [ ]
+    name: String,
+    lessons: [
+      {
+        title: {
+          type: String,
+        },
+        description: {
+          type: String,
+        },
+        text: {
+          type: String,
+        }
+      }
+    ]
   });
   
 export const LessonModule = mongoose.model("LessonModule", LessonModuleSchema);

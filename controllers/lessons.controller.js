@@ -7,7 +7,7 @@ const lessonsController = {
   },
 
   addModule: async (req, res) => {
-    const { name, image } = req.body;
+    const { name } = req.body;
     try {
       const lessonModule = await LessonModule.create({
         name,
