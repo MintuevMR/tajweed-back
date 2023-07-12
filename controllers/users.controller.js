@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { User } from "../models/User.model.js";
 import jwt from "jsonwebtoken";
 
+
 const usersController = {
   registrationUser: async (req, res) => {
     const { login, password, firstName, lastName } = req.body;
@@ -15,7 +16,7 @@ const usersController = {
       });
       res.json(user);
     } catch (error) {
-      res.json({ error: "Ошибка при регистрации" + error.message });
+      res.status(401).json({ error: "Ошибка при регистрации " + error.message });
     }
   },
 
@@ -38,7 +39,9 @@ const usersController = {
       const token = await jwt.sign(
         {
           id: candidate._id,
-          login: candidate.login
+          login: candidate.login,
+          firstName:  candidate.firstName,
+          lastName:  candidate.lastName
         },
         process.env.SECRET_JWT_KEY,
         {
@@ -48,7 +51,6 @@ const usersController = {
       res.json({
         success: true,
         token,
-        candidate,
         message: "Вы авторизованы",
       });
     } catch (error) {

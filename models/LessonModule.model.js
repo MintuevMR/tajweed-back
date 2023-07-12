@@ -21,5 +21,4 @@ const LessonModuleSchema = new mongoose.Schema({
     ]
   });
   
-
 export const LessonModule = mongoose.model("LessonModule", LessonModuleSchema);
