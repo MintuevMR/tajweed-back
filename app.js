@@ -3,7 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import cors from "cors";
-
+import bookmarksRouter from "./routes/bookmarks.model.js"
 import usersRouter  from "./routes/users.route.js";
 import lessonsRouter  from "./routes/lessons.route.js";
 
@@ -16,5 +16,7 @@ app.use(cors());
 //routes
 app.use(usersRouter);
 app.use(lessonsRouter);
+app.use(bookmarksRouter);
+
 
 connectToDatabase();
