@@ -1,5 +1,5 @@
 import { Router } from "express";
-import bookmarkController from "../controllers/bookmarks.controller"
+import bookmarkController from "../controllers/bookmarks.controller.js"
 import { authMiddleware } from "../middleware/auth.middleware.js";
 
 
