@@ -6,6 +6,7 @@ import cors from "cors";
 
 import usersRouter  from "./routes/users.route.js";
 import lessonsRouter  from "./routes/lessons.route.js";
+import azkaryRouter from "./routes/azkary.route.js";
 
 export const app = express();
 
@@ -16,5 +17,6 @@ app.use(cors());
 //routes
 app.use(usersRouter);
 app.use(lessonsRouter);
+app.use(azkaryRouter);
 
 connectToDatabase();
