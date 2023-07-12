@@ -7,21 +7,7 @@ const LessonModuleSchema = new mongoose.Schema({
     image: {
       type: String,
     },
-
-    lessons: [
-      {
-        nameLesson: {
-          type: String,
-        },
-        description: {
-          type: String,
-        },
-        content: {
-          type: String,
-        }
-      }
-    ]
+    lessons: [ ]
   });
   
-
 export const LessonModule = mongoose.model("LessonModule", LessonModuleSchema);
