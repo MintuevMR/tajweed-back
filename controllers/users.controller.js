@@ -14,6 +14,8 @@ const usersController = {
         lastName,
         password: hash,
       });
+
+      // BookModule
       res.json(user);
     } catch (error) {
       res.status(401).json({ error: "Ошибка при регистрации " + error.message });

@@ -1,7 +1,6 @@
 {
   "name": "tajweed-back",
   "version": "1.0.0",
-  "description": "",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -11,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "nodemon": "^3.0.1"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -21,5 +20,6 @@
     "express-validator": "^7.0.1",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.3.1"
-  }
+  },
+  "description": ""
 }
