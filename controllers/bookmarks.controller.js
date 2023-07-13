@@ -1,4 +1,4 @@
-import { BookmarkModule } from "../models/Bookmark.module.js";
+import { BookmarkModule } from "../models/Bookmark.model.js";
 
 
 const bookmarkController = {
@@ -25,20 +25,22 @@ const bookmarkController = {
   addBookmark: async (req, res) => {
     try {
       const bookmarkArray = await BookmarkModule.findOne({ user: req.user.id });
-      if (!bookmarkArray.bookmarkLessons.includes(req.body.id)) {
-        await BookmarkModule.findOneAndUpdate(
+      if (!bookmarkArray.bookmarkLessons.includes(req.params.id)) {
+        const module = await BookmarkModule.findOneAndUpdate(
           { user: req.user.id },
           {
-            $push: { bookmarkLessons: req.body.id },
-          }
+            $push: { bookmarkLessons: req.params.id },
+          }, {new: true}
         );
+        return res.json(module)
       } else {
-        await BookmarkModule.findOneAndUpdate(
+        const module = await BookmarkModule.findOneAndUpdate(
           { user: req.user.id },
           {
-            $pull: { bookmarkLessons: req.body.id },
-          }
+            $pull: { bookmarkLessons: req.params.id },
+          }, {new: true}
         );
+        return res.json(module)
       }
     } catch (error) {
       res.json({ error: error.message });

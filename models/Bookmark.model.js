@@ -7,7 +7,7 @@ const bookmarkSchema = mongoose.Schema({
         ref: "User"
     },
     bookmarkLessons: [{type: mongoose.SchemaTypes.ObjectId,
-    ref: "Lesson"
+    ref: "name"
     }]
 });
 

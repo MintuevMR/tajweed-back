@@ -7,7 +7,7 @@ const router = Router()
 
 router.get('/bookmarks/:userId', bookmarkController.getBookmark)
 router.post('/bookmarks', authMiddleware, bookmarkController.postBookmark)
-router.patch('/bookmarks', authMiddleware, bookmarkController.addBookmark)
+router.patch('/bookmarks/:id', authMiddleware, bookmarkController.addBookmark)
 
 
 export default router;
