@@ -7,10 +7,14 @@ const lessonsController = {
   },
 
   addModule: async (req, res) => {
-    const { name } = req.body;
+    const { name, title, description, text, ref } = req.body;
     try {
       const lessonModule = await LessonModule.create({
         name,
+        title,
+        description,
+        text,
+        ref,
       });
       return res.json(lessonModule);
     } catch (error) {
@@ -41,7 +45,7 @@ const lessonsController = {
     } catch (error) {
       return res.status(401).json({ error: error.message });
     }
-  }
+  },
 
 };
 
