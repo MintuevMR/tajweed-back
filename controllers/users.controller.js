@@ -2,7 +2,6 @@ import bcrypt from "bcrypt";
 import { User } from "../models/User.model.js";
 import jwt from "jsonwebtoken";
 
-
 const usersController = {
   registrationUser: async (req, res) => {
     const { login, password, firstName, lastName } = req.body;
@@ -13,12 +12,15 @@ const usersController = {
         firstName,
         lastName,
         password: hash,
+        bookmarks: [],
       });
 
       // BookModule
       res.json(user);
     } catch (error) {
-      res.status(401).json({ error: "Ошибка при регистрации " + error.message });
+      res
+        .status(401)
+        .json({ error: "Ошибка при регистрации " + error.message });
     }
   },
 
@@ -27,8 +29,8 @@ const usersController = {
       const { login, password } = req.body;
       const candidate = await User.findOne({ login });
 
-      if (!candidate) {  
-        return res 
+      if (!candidate) {
+        return res
           .status(401)
           .json({ error: "Ошибка при входе " + error.message });
       }
@@ -42,8 +44,8 @@ const usersController = {
         {
           id: candidate._id,
           login: candidate.login,
-          firstName:  candidate.firstName,
-          lastName:  candidate.lastName
+          firstName: candidate.firstName,
+          lastName: candidate.lastName,
         },
         process.env.SECRET_JWT_KEY,
         {
@@ -57,8 +59,34 @@ const usersController = {
       });
     } catch (error) {
       return res
-      .status(401)
-      .json({ error: "Ошибка при входе " + error.message });
+        .status(401)
+        .json({ error: "Ошибка при входе " + error.message });
+    }
+  },
+  addBookmark: async (req, res) => {
+    const { moduleId } = req.body;
+    try {
+      const user = await User.findById(req.user.id);
+
+      if (user.bookmarks.includes(moduleId)) {
+        await User.findByIdAndUpdate(
+          req.user.id,
+          { $pull: { bookmarks: moduleId } }
+        );
+      } else {
+        await User.findByIdAndUpdate(
+          req.user.id,
+          { $push: { bookmarks: moduleId } }
+        );
+      }
+
+      const candidate = await User.findById(req.user.id).populate("bookmarks");
+
+      res.json(candidate);
+    } catch (error) {
+      res
+        .status(401)
+        .json({ error: "Ошибка при добавлении закладки " + error.message });
     }
   },
 };

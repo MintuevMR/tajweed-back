@@ -26,8 +26,15 @@ router.post(
   usersController.login
 );
 
+router.patch("/bookmark", authMiddleware, usersController.addBookmark);
+
 router.get("/profile", authMiddleware, async (req, res) => {
-  const user = await User.findById(req.user.id);
+  const user = await User.findById(req.user.id).populate('bookmarks');
+  res.json(user);
+});
+
+router.get("/bookmark", authMiddleware, async (req, res) => {
+  const bookmark = await User.findById(req.user.id);
   res.json(user);
 });
 
@@ -45,19 +52,24 @@ router.patch("/profile", authMiddleware, async (req, res) => {
   res.json(user);
 });
 
-router.patch("/profile/change-img", authMiddleware, upload.single('image'), async (req, res) => {
-  try {
-    const user = await User.findByIdAndUpdate(
-      req.user.id,
-      {
-        avatar: `/uploads/${req.file.originalname}`,
-      },
-      { new: true }
-    );
-    return res.json(user);
-  } catch (error) {
-    return res.status(401).json({ error: error.message });
+router.patch(
+  "/profile/change-img",
+  authMiddleware,
+  upload.single("image"),
+  async (req, res) => {
+    try {
+      const user = await User.findByIdAndUpdate(
+        req.user.id,
+        {
+          avatar: `/uploads/${req.file.originalname}`,
+        },
+        { new: true }
+      );
+      return res.json(user);
+    } catch (error) {
+      return res.status(401).json({ error: error.message });
+    }
   }
-});
+);
 
 export default router;
