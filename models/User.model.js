@@ -7,7 +7,9 @@ const userSchema = mongoose.Schema({
   avatar: {type: String},
   role: { type: String, default: "user" },
   password: { type: String, require: true },
-  // saved: [mongoose.SchemaTypes.ObjectId, ref: "LessonModule"]
-});
+  bookmarks: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "LessonModule",
+  }],});
 
 export const User = mongoose.model("User", userSchema);
