@@ -25,6 +25,21 @@ const groupController = {
       return res.status(401).json({ error: "Ошибка при создании группы" });
     }
   },
+  editGroups: async (req, res) => {
+    //изменение названия группы
+    const groupId = req.params.id;
+    const { groups } = req.body;
+    try {
+      const group = await Group.findByIdAndUpdate(groupId, { groups }, { new: true });
+
+      if (!group) {
+        return res.status(404).json({ error: "Группа не найдена" });
+    }
+      return res.json(group);
+    } catch (error) {
+      return res.status(401).json({ error: "Ошибка при изменении группы" });
+    }
+  },
   getGroupsById: async (req, res) => {
     //показ одной группы
     try {
@@ -57,7 +72,7 @@ const groupController = {
     //добавление пользователя в группу
     try {
       const groupId = req.params.id;
-      const userId = req.body.id;
+      const userId = req.params.userId;
 
       const group = await Group.findById(groupId);
       if (!group) {
@@ -72,7 +87,7 @@ const groupController = {
       if (group.users.includes(userId)) {
         return res.status(401).json({ error: "Такой пользователь уже есть в группе" });
       }
-      
+
       group.users.push(userId);
       await group.save();
 
@@ -87,7 +102,7 @@ const groupController = {
     //удаление пользователя из группы
     try {
       const groupId = req.params.id;
-      const userId = req.body.id;
+      const userId = req.params.userId;
 
       const group = await Group.findById(groupId);
     if (!group) {

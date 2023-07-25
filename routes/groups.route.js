@@ -7,7 +7,8 @@ router.get("/groups", groupController.getGroups);
 router.post("/groups", groupController.addGroups);
 router.get("/group/:id", groupController.getGroupsById);
 router.delete("/group/:id", groupController.deleteGroupById);
-router.post("/group/:id/add-user", groupController.addUserInGroup);
-router.delete("/group/:id/delete-user", groupController.deleteUserFromGroup);
+router.post("/group/:id/add-user/:userId", groupController.addUserInGroup);
+router.delete("/group/:id/delete-user/:userId", groupController.deleteUserFromGroup);
+router.patch("/group/:id", groupController.editGroups);
 
 export default router;
