@@ -72,4 +72,6 @@ router.patch(
   }
 );
 
+  router.get("/users", usersController.getUser);
+
 export default router;
