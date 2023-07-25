@@ -69,15 +69,13 @@ const usersController = {
       const user = await User.findById(req.user.id);
 
       if (user.bookmarks.includes(moduleId)) {
-        await User.findByIdAndUpdate(
-          req.user.id,
-          { $pull: { bookmarks: moduleId } }
-        );
+        await User.findByIdAndUpdate(req.user.id, {
+          $pull: { bookmarks: moduleId },
+        });
       } else {
-        await User.findByIdAndUpdate(
-          req.user.id,
-          { $push: { bookmarks: moduleId } }
-        );
+        await User.findByIdAndUpdate(req.user.id, {
+          $push: { bookmarks: moduleId },
+        });
       }
 
       const candidate = await User.findById(req.user.id).populate("bookmarks");
@@ -87,6 +85,14 @@ const usersController = {
       res
         .status(401)
         .json({ error: "Ошибка при добавлении закладки " + error.message });
+    }
+  },
+  getUser: async (req, res) => {
+    try {
+      const user = await User.find();
+      res.json(user);
+    } catch (error) {
+      res.status(401).json({ error: "Ошибка при показе пользователей" });
     }
   },
 };
