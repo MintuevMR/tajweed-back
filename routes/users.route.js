@@ -2,6 +2,7 @@ import { Router, json } from "express";
 import { authMiddleware } from "../middleware/auth.middleware.js";
 import usersController from "../controllers/users.controller.js";
 import {
+  changeInfoValidation,
   loginValidation,
   registerValidation,
 } from "../validation/auth.validator.js";
@@ -38,7 +39,7 @@ router.get("/bookmark", authMiddleware, async (req, res) => {
   res.json(user);
 });
 
-router.patch("/profile", authMiddleware, async (req, res) => {
+router.patch("/profile",  authMiddleware, changeInfoValidation,  handleValidationErrors, async (req, res) => {
   const user = await User.findByIdAndUpdate(
     req.user.id,
     {
