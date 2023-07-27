@@ -73,24 +73,29 @@ const groupController = {
     try {
       const groupId = req.params.id;
       const userId = req.params.userId;
-
+  
       const group = await Group.findById(groupId);
       if (!group) {
         return res.status(401).json({ error: "Группа не найдена" });
       }
-
+  
       const user = await User.findById(userId);
       if (!user) {
         return res.status(401).json({ error: "Пользователь не найден" });
       }
-
+  
       if (group.users.includes(userId)) {
         return res.status(401).json({ error: "Такой пользователь уже есть в группе" });
       }
-
+      
+      //Добавим айди пользователя в поле users
       group.users.push(userId);
       await group.save();
-
+  
+      // Добавим айди группы в поле groups у пользователя
+      user.groups.push(groupId);
+      await user.save();
+  
       return res.json(group);
     } catch (error) {
       return res
