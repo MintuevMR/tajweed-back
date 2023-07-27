@@ -5,7 +5,7 @@ const groupController = {
   getGroups: async (req, res) => {
     //показ всех групп
     try {
-      const group = await Group.find();
+      const group = await Group.find().populate('users');
       res.json(group);
     } catch (error) {
       return res
