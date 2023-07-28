@@ -96,7 +96,7 @@ const groupController = {
       user.groups.push(groupId);
       await user.save();
   
-      return res.json(group);
+      return res.json(user);
     } catch (error) {
       return res
         .status(401)
